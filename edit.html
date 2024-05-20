@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - IT Products</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="home.html">IT Products</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="edit.html">Edit</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!-- Login Button -->
+                <li class="nav-item">
+                    <a class="btn btn-outline-light nav-link" href="login.html">Login</a>
+                </li>
+                <!-- User Info and Logout Button -->
+                <li class="nav-item d-flex align-items-center">
+                    <span class="navbar-text mr-3">Username</span>
+                    <a class="btn btn-outline-light nav-link" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h3 class="text-center">Add New Product</h3>
+        <form>
+            <div class="form-group">
+                <label for="productImage">Product Image URL</label>
+                <input type="text" class="form-control" id="productImage" placeholder="Enter image URL">
+            </div>
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+                <input type="text" class="form-control" id="productName" placeholder="Enter product name">
+            </div>
+            <div class="form-group">
+                <label for="productDescription">Product Description</label>
+                <textarea class="form-control" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="productCategory">Product Category</label>
+                <input type="text" class="form-control" id="productCategory" placeholder="Enter product category">
+            </div>
+            <div class="form-group">
+                <label for="productPrice">Product Price</label>
+                <input type="number" class="form-control" id="productPrice" placeholder="Enter product price">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

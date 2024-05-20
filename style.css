@@ -1,0 +1,40 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.horizontal-card {
+    display: flex;
+    flex-direction: row;
+}
+
+.horizontal-card .card-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.horizontal-card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
