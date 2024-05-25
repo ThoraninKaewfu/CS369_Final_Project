@@ -38,44 +38,13 @@
 
  <!-- Product List Container -->
  <div class="container mt-5">
-    <div class="row" id="product-list">
-        <!-- Product Cards Will Be Appended Here -->
+    <div class="row" id="product-list js-prod-list">
+        <!-- Product Cards Will Be Appended Here-->
+      
     </div>
 </div>
 
-<!-- Script to Fetch and Display Products -->
-<script>
-    fetch('/home')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            data.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.classList.add('col-md-4');
-
-                productCard.innerHTML = `
-                    <div class="card mb-4">
-                        <img src="${product.path_picture}" class="card-img-top" alt="${product.prod_name}">
-                        <div class="card-body">
-                            <h5 class="card-title">${product.prod_name}</h5>
-                            <p class="card-text">Price: $${product.price}</p>
-                            <a href="product.html?id=${product.id}" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                `;
-
-                document.getElementById('product-list').appendChild(productCard);
-            });
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-</script>
-
+    <script type="module" src="./home.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
