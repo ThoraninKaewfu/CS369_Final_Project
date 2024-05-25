@@ -64,6 +64,7 @@ app.get('/product/:id', (req, res) => {
     });
 });
 
+
 app.get('/edit.html', isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'edit.html'));
 });
@@ -105,8 +106,8 @@ app.get('/edit', isAuthenticated, (req, res) => {
     });
 });
 
-app.get('/login', (req, res) => {
-    const { username, password } = req.query;
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
 
     // Query to check the username and password
     db.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, results) => {
@@ -119,9 +120,9 @@ app.get('/login', (req, res) => {
         if (results.length > 0) {
             // Set the session user info
             req.session.user = results[0];
-            res.status(200).sendFile(path.join(__dirname, 'home.html'));
+            res.status(200).json({ message: 'Login successful' });
         } else {
-            res.status(401).sendFile(path.join(__dirname, 'login.html'));
+            res.status(401).json({ message: 'Invalid username or password' });
         }
     });
 });
@@ -132,7 +133,7 @@ app.get('/logout', (req, res) => {
             console.error('Error logging out:', err);
             return res.status(500).send('Internal Server Error');
         }
-        res.redirect('/login');
+        res.sendFile(path.join(__dirname, 'login.html'));
     });
 });
 
@@ -148,7 +149,7 @@ function isAuthenticated(req, res, next) {
     if (req.session.user) {
         return next();
     } else {
-        res.redirect('/login');
+        res.sendFile(path.join(__dirname, 'login.html'));
     }
 }
 
