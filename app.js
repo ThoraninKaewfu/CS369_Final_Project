@@ -75,7 +75,11 @@ app.get('/edit', (req, res) => {
         const newId = maxId + 1;
 
         // Extract data from the request body
-        const { path_picture, prod_name, details, type, price } = req.body;
+        const { path_picture, prod_name, details, type, price } = req.query;
+
+        console.log("-------------------------------")
+        console.log("Add new product from edit form")
+        console.log(req.query)
 
         // Insert the new product into the database with the new id
         db.query('INSERT INTO prod (id, path_picture, prod_name, details, type, price) VALUES (?, ?, ?, ?, ?, ?)', [newId, path_picture, prod_name, details, type, price], (err, result) => {
@@ -86,7 +90,8 @@ app.get('/edit', (req, res) => {
             }
 
             console.log('New product added successfully');
-            res.status(200).send('New product added successfully');
+            console.log("-------------------------------")
+            res.status(200).sendFile(path.join(__dirname, 'home.html'));
         });
     });
 });
