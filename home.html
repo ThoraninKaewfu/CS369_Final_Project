@@ -14,67 +14,83 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" id="nav-items">
                 <li class="nav-item">
                     <a class="nav-link" href="home.html">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="edit.html">Edit</a>
-                </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
-                <!-- Login Button -->
+            <ul class="navbar-nav ml-auto" id="auth-items">
                 <li class="nav-item">
                     <a class="btn btn-outline-light nav-link" href="login.html">Login</a>
-                </li>
-                <!-- User Info and Logout Button -->
-                <li class="nav-item d-flex align-items-center">
-                    <span class="navbar-text mr-3">Username</span>
-                    <a class="btn btn-outline-light nav-link" href="#">Logout</a>
                 </li>
             </ul>
         </div>
     </nav>
 
- <!-- Product List Container -->
- <div class="container mt-5">
-    <div class="row" id="product-list">
-        <!-- Product Cards Will Be Appended Here -->
+    <!-- Product List Container -->
+    <div class="container mt-5">
+        <div class="row" id="product-list">
+            <!-- Product Cards Will Be Appended Here -->
+        </div>
     </div>
-</div>
 
-<!-- Script to Fetch and Display Products -->
-<script>
-    fetch('/home')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            data.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.classList.add('col-md-4');
+    <!-- Script to Fetch and Display Products -->
+    <script>
+        // Fetch user info to update navbar
+        fetch('/user-info')
+            .then(response => response.json())
+            .then(user => {
+                const navItems = document.getElementById('nav-items');
+                const authItems = document.getElementById('auth-items');
 
-                productCard.innerHTML = `
-                    <div class="card mb-4">
-                        <img src="${product.path_picture}" class="card-img-top" alt="${product.prod_name}">
-                        <div class="card-body">
-                            <h5 class="card-title">${product.prod_name}</h5>
-                            <p class="card-text">Price: $${product.price}</p>
-                            <a href="product.html?id=${product.id}" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                `;
+                if (user.loggedIn) {
+                    // Add Edit link if logged in
+                    const editItem = document.createElement('li');
+                    editItem.classList.add('nav-item');
+                    editItem.innerHTML = '<a class="nav-link" href="edit.html">Edit</a>';
+                    navItems.appendChild(editItem);
 
-                document.getElementById('product-list').appendChild(productCard);
+                    // Add username and logout button
+                    authItems.innerHTML = `
+                        <li class="nav-item d-flex align-items-center">
+                            <span class="navbar-text mr-3">${user.username}</span>
+                            <a class="btn btn-outline-light nav-link" href="/logout">Logout</a>
+                        </li>
+                    `;
+                }
             });
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-</script>
+
+        // Fetch products to display
+        fetch('/home')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('col-md-4');
+
+                    productCard.innerHTML = `
+                        <div class="card mb-4">
+                            <img src="${product.path_picture}" class="card-img-top" alt="${product.prod_name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.prod_name}</h5>
+                                <p class="card-text">Price: $${product.price}</p>
+                                <a href="product.html?id=${product.id}" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('product-list').appendChild(productCard);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

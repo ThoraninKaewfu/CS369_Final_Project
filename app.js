@@ -2,13 +2,20 @@ const express = require('express');
 const path = require('path');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: 'key01', 
+    resave: false,
+    saveUninitialized: true
+}));
 
-// ตั้งค่าการเชื่อมต่อกับฐานข้อมูล MySQL
+
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -16,7 +23,6 @@ const db = mysql.createConnection({
     database: 'cs369_temp'
 });
 
-// เชื่อมต่อกับฐานข้อมูล
 db.connect((err) => {
     if (err) {
         console.error('Error connecting to the database:', err.stack);
@@ -58,8 +64,11 @@ app.get('/product/:id', (req, res) => {
     });
 });
 
+app.get('/edit.html', isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, 'edit.html'));
+});
 
-app.get('/edit', (req, res) => {
+app.get('/edit', isAuthenticated, (req, res) => {
     // Query to get the max id
     db.query('SELECT MAX(id) AS max_id FROM prod', (err, results) => {
         if (err) {
@@ -97,8 +106,51 @@ app.get('/edit', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
+    const { username, password } = req.query;
+
+    // Query to check the username and password
+    db.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, results) => {
+        if (err) {
+            console.error('Error retrieving user:', err);
+            res.status(500).json({ message: 'Internal Server Error' });
+            return;
+        }
+
+        if (results.length > 0) {
+            // Set the session user info
+            req.session.user = results[0];
+            res.status(200).sendFile(path.join(__dirname, 'home.html'));
+        } else {
+            res.status(401).sendFile(path.join(__dirname, 'login.html'));
+        }
+    });
 });
+
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error logging out:', err);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.redirect('/login');
+    });
+});
+
+app.get('/user-info', (req, res) => {
+    if (req.session.user) {
+        res.json({ loggedIn: true, username: req.session.user.username });
+    } else {
+        res.json({ loggedIn: false });
+    }
+});
+
+function isAuthenticated(req, res, next) {
+    if (req.session.user) {
+        return next();
+    } else {
+        res.redirect('/login');
+    }
+}
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

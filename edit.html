@@ -14,23 +14,14 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" id="nav-items">
                 <li class="nav-item">
                     <a class="nav-link" href="home.html">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="edit.html">Edit</a>
-                </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
-                <!-- Login Button -->
+            <ul class="navbar-nav ml-auto" id="auth-items">
                 <li class="nav-item">
                     <a class="btn btn-outline-light nav-link" href="login.html">Login</a>
-                </li>
-                <!-- User Info and Logout Button -->
-                <li class="nav-item d-flex align-items-center">
-                    <span class="navbar-text mr-3">Username</span>
-                    <a class="btn btn-outline-light nav-link" href="#">Logout</a>
                 </li>
             </ul>
         </div>
@@ -62,6 +53,33 @@
             <button type="submit" class="btn btn-primary btn-block">Save</button>
         </form>        
     </div>
+
+    <script>
+        // Fetch user info to update navbar
+        fetch('/user-info')
+            .then(response => response.json())
+            .then(user => {
+                const navItems = document.getElementById('nav-items');
+                const authItems = document.getElementById('auth-items');
+
+                if (user.loggedIn) {
+                    // Add Edit link if logged in
+                    const editItem = document.createElement('li');
+                    editItem.classList.add('nav-item');
+                    editItem.innerHTML = '<a class="nav-link" href="edit.html">Edit</a>';
+                    navItems.appendChild(editItem);
+
+                    // Add username and logout button
+                    authItems.innerHTML = `
+                        <li class="nav-item d-flex align-items-center">
+                            <span class="navbar-text mr-3">${user.username}</span>
+                            <a class="btn btn-outline-light nav-link" href="/logout">Logout</a>
+                        </li>
+                    `;
+                }
+            });
+
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
