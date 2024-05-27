@@ -32,20 +32,66 @@ export async function gprod(maxid)
 
 export async function prodid(id)
 {
-    const [rows] = await db.query(`
+    const [row] = await db.query(`
     SELECT * 
     FROM prod
-    WHERE id == ?
+    WHERE id = ?
     `, [id])
-    return rows
+
+    return row
 }
 
 export async function add_prod(path_pic, name, details, type, price)
 {
+    const [maxid] = await db.query(`SELECT MAX(id) as maxId FROM prod`);
+    const nextId = maxid[0].maxId + 1; // Accessing the value and adding 1
+    
     const [rows] = await db.query(`
-    INSERT INTO prod (path_picture, prod_name, details, type, price)
-    VALUE (?, ?, ?, ?, ?)
-    `, [path_pic, name, details, type, price])
+    INSERT INTO prod (id, path_picture, prod_name, details, type, price)
+    VALUE (?, ?, ?, ?, ?, ?)
+    `, [nextId, path_pic, name, details, type, price])
     return rows
+}
+
+export async function del_prod(id)
+{
+    try
+    {
+        await db.query(`
+        DROP FROM prod
+        WHERE id = ?        
+        `, [id])
+    }
+    catch(error)
+    {
+        console.error('Error querying delete by ID:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+export async function check_user(username)
+{
+    const [row] = await db.query(`
+    SELECT * 
+    FROM users
+    WHERE username = ?
+    `, [username])
+
+    if (row.length === 0) {
+        return null; // User not found
+    }
+
+    return row[0];
+}
+
+export async function getaUser(id)
+{
+    const [row] = await db.query(`
+    SELECT * 
+    FROM users
+    WHERE id = ?
+    `, [id])
+
+    return row
 }
 

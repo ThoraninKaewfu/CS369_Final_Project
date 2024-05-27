@@ -9,75 +9,33 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="home.html">IT Products</a>
+        <a class="navbar-brand" href="/">IT Products</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" id="nav-items">
                 <li class="nav-item">
-                    <a class="nav-link" href="home.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="edit.html">Edit</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto"  id="auth-items" >               
                 <!-- Login Button -->
                 <li class="nav-item">
-                    <a class="btn btn-outline-light nav-link" href="login.html">Login</a>
-                </li>
-                <!-- User Info and Logout Button -->
-                <li class="nav-item d-flex align-items-center">
-                    <span class="navbar-text mr-3">Username</span>
-                    <a class="btn btn-outline-light nav-link" href="#">Logout</a>
+                    <a class="btn btn-outline-light nav-link" href="/login">Login</a>
                 </li>
             </ul>
         </div>
     </nav>
 
     <div class="container mt-5">
-        <div id="product-details" class="row"></div>
+        <div id="product-details" class="row">
+            <!--JS generating html-->
+        </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id');
-            fetch(`/product/${productId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const productDetails = document.getElementById('product-details');
-                    productDetails.innerHTML = `
-                    <div class="col-md-12">
-                        <div class="card mb-3">
-                            <div class="row no-gutters">
-                                <div class="col-md-5">
-                                    <img src="${data.path_picture}" class="card-img" alt="${data.name}">
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${data.prod_name}</h5>
-                                        <p class="card-text">${data.details}</p>
-                                        <p class="card-text">Category: ${data.type}</p>
-                                        <p class="card-text">Price: $${data.price}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                })
-                .catch(error => console.error('Error fetching product:', error));
-        });
 
-    </script>
-
+    <script type="module" src="./backend/product.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

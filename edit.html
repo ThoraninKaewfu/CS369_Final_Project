@@ -9,39 +9,33 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="home.html">IT Products</a>
+        <a class="navbar-brand" href="/">IT Products</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" id="nav-items">
                 <li class="nav-item">
-                    <a class="nav-link" href="home.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="edit.html">Edit</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
-                <!-- Login Button -->
-                <li class="nav-item">
-                    <a class="btn btn-outline-light nav-link" href="login.html">Login</a>
-                </li>
+            <ul class="navbar-nav ml-auto" id="auth-items">
+                
                 <!-- User Info and Logout Button -->
-                <li class="nav-item d-flex align-items-center">
-                    <span class="navbar-text mr-3">Username</span>
-                    <a class="btn btn-outline-light nav-link" href="#">Logout</a>
-                </li>
+
             </ul>
         </div>
     </nav>
 
     <div class="container mt-5">
         <h3 class="text-center">Add New Product</h3>
-        <form id="addProductForm" >
+
+        <!--send from to newpro with post method and send data more than text to server-->
+        <form id="addProductForm" action="/newprod" method="post" encType="multipart/form-data">
             <div class="form-group">
                 <label for="productImage">Product Image URL</label>
-                <input type="text" class="form-control" id="path_picture" name="path_picture" placeholder="Enter image URL">
+                <!--<input type="text" class="form-control" id="path_picture" name="path_picture" placeholder="Enter image URL">-->
+                <input class="form-control" type="file" name="sampleFile" accept="image/*"/>
             </div>
             <div class="form-group">
                 <label for="productName">Product Name</label>
@@ -63,6 +57,7 @@
         </form>        
     </div>
 
+    <script type="module" src="./backend/edit.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
