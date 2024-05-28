@@ -104,7 +104,6 @@ sudo npm run dev
 sudo systemctl restart nginx
 ```
 
-BY
-ธรณินทร์ แก้วฟู           6309610126<br>
-เปรมรัศมี ไหล่วิจิตร        6309610167<br>
+#ธรณินทร์ แก้วฟู           6309610126<br>
+#เปรมรัศมี ไหล่วิจิตร        6309610167<br>
 REF : https://devsarticles.com/deploy-nodejs-app-to-aws-ec2-hosting
