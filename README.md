@@ -98,3 +98,5 @@ server {
                 proxy_cache_bypass $http_upgrade;
     }
 ```
+
+REF : https://devsarticles.com/deploy-nodejs-app-to-aws-ec2-hosting
