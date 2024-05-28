@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function()
     const productId = urlParams.get('id');
     
     //fetch data from backend
-    fetch(`http://localhost:3000/product/${productId}`)
+    fetch(`/product/${productId}`)
 
     //after fetch and receive respond -> export to JSON file
     .then(response => 
