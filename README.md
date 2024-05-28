@@ -48,9 +48,6 @@ SHOW GRANTS FOR 'username'@'host;
 
 #restore database
 mysql -u root -p database < dumpfile
-
-# Start the application at app.js
-sudo npm run dev
 ```
 
 back to project dir and change ENV file
@@ -99,4 +96,12 @@ server {
     }
 ```
 
+start node server and nginx
+```
+# Start the application at app.js
+sudo npm run dev
+
+#restart nginx
+sudo systemctl restart nginx
+```
 REF : https://devsarticles.com/deploy-nodejs-app-to-aws-ec2-hosting
