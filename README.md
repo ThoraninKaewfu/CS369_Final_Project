@@ -30,11 +30,8 @@ sudo systemctl start mysqld
 sudo systemctl enable mysqld
 ```
 
-edit inside server
+edit database server
 ```
-# Start the application at app.js
-sudo npm run dev
-
 #enter to mysql server
 get root pass -> sudo grep 'temporary password' /var/log/mysqld.log
 mysql -u root -p
@@ -51,4 +48,53 @@ SHOW GRANTS FOR 'username'@'host;
 
 #restore database
 mysql -u root -p database < dumpfile
+
+# Start the application at app.js
+sudo npm run dev
+```
+
+back to project dir and change ENV file
+```
+#back to home
+cd
+#go to git folder
+sudo vim CS369_Final_Project/.env
+```
+
+inside ENV file
+```
+MYSQL_HOST = 'host'
+MYSQL_PORT = 'port'
+MYSQL_USER = 'username'
+MYSQL_PASS = 'userpass'
+MYSQL_DB = 'db name'
+
+DATAhttp = 'http://localhost:3000'
+
+```
+
+Config NGINX
+```
+#goto nginx config dir
+cd /etc/nginx/conf.d
+
+#create config file
+sudo vim cs369_proj.conf
+```
+inside cs369_proj.conf
+```
+server {
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  _;  # using public IP to access web app
+        root         /home/ec2-user/CS369_Final_Project; # Where our proj is.
+
+        location / { #reverse proxy for access node server inside web server
+                proxy_pass http://localhost:3000; # my app's port
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+    }
 ```
