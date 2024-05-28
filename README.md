@@ -105,6 +105,6 @@ sudo systemctl restart nginx
 ```
 
 BY
-
-เปรมรัศมี ไหล่วิจิตร<br>
+ธรณินทร์ แก้วฟู           6309610126<br>
+เปรมรัศมี ไหล่วิจิตร        6309610167<br>
 REF : https://devsarticles.com/deploy-nodejs-app-to-aws-ec2-hosting
