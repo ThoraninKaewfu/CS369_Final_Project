@@ -1,4 +1,4 @@
-# CS396_Final_Project
+# CS369_Final_Project
 
 script code to initial EC2
 ```
