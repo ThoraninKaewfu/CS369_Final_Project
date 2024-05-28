@@ -1,5 +1,4 @@
 # CS369_Final_Project
-
 script code to initial EC2
 ```
 #!/bin/bash
@@ -104,4 +103,7 @@ sudo npm run dev
 #restart nginx
 sudo systemctl restart nginx
 ```
+
+BY
+Pramerasamee Laiwijit
 REF : https://devsarticles.com/deploy-nodejs-app-to-aws-ec2-hosting
